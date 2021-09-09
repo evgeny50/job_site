@@ -15,7 +15,8 @@ class Vacancy(models.Model):
     specialty = models.ManyToManyField(
         'Specialty',
         related_name='vacancies',
-        verbose_name='Специализация')
+        verbose_name='Специализация',
+    blank=True, null=True)
     slug = models.SlugField(
         max_length=255,
         unique=True,
@@ -28,7 +29,8 @@ class Vacancy(models.Model):
     skills = models.ManyToManyField(
         'Skill',
         verbose_name='Требуемые навыки',
-        related_name='skills')
+        related_name='skills',
+        blank=True, null=True)
     description = models.TextField(
         verbose_name='Описание вакансии')
     salary_min = models.IntegerField(
@@ -52,6 +54,11 @@ class Vacancy(models.Model):
 
     def get_absolute_url(self):
         return reverse('vacancy', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        value = unidecode.unidecode(self.title).lower()
+        self.slug = slugify(value, allow_unicode=False)
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Вакансию'

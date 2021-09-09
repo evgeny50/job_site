@@ -7,11 +7,8 @@
             background-color: #F6F2E6;
         }
     </style>
-    </head>
 
     <body>
-
-
     <main class="container mt-3 pb-5">
         <div class="row mt-5">
             <div class="col-12 col-lg-4">
@@ -22,27 +19,55 @@
                     <div class="card-body px-4 pb-4">
                         <section class="tab-pane fade show active">
                             <h2 class="h4 pt-2 pb-3">Вакансии</h2>
+                            {% for message in messages %}
+                                {% if message.tags == 'success' %}
+                                    <p class="alert alert-info mb-4" role="alert">
+                                        Информация о вакансии обновлена
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
                             <!-- vacancy state 1 -->
-                            <div class="card mt-3">
-                                <div class="card-body px-4">
-                                    <div class="row align-items-center">
-                                        <div class="col-6 col-lg-8">
-                                            {% for vacancy in vacancies %}
+                            {% for vacancy in page_obj %}
+                                <div class="card mt-3">
+                                    <div class="card-body px-4">
+                                        <div class="row align-items-center">
+                                            <div class="col-6 col-lg-8">
                                                 <a href="{{ vacancy.get_absolute_url }}" class="mb-1">{{ vacancy.title }}</a>
                                                 <p class="mb-1">
                                                     <span class="mr-4">{{ vacancy.salary_max }}</span><a href="#" class="text-info">3 отклика</a>
                                                 </p>
-                                                </div>
-                                                <div class="col-6 col-lg-4 text-right">
-                                                    <a href="#" class="btn btn-outline-info">Изменить</a>
-                                                </div>
-                                                </div>
-                                                </div>
-                                            {% endfor %}
-                            </div>
+                                            </div>
+                                            <div class="col-6 col-lg-4 text-right">
+                                                <a href="/cabinet/{{ vacancy.slug }}/" class="btn btn-outline-info">Изменить</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                             <!-- END vacancy state 1 -->
                         </section>
-                    </div>
+                        <div class="form-group mt-4">
+                            <a href="{% url 'create_vacancy' %}"><button class="btn btn-info" type="submit">Add vacancy</button></a>
+                        </div>
+                        {% if page_obj.has_other_pages %}
+                            <div class="nav-links">
+                                {% if page_obj.has_previous %}
+                                    <a class="page-numbers" href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                {% endif %}
+                                {% for p in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == p %}
+                                        <span class="page-numbers current">{{ p }}</span>
+                                    {% else %}
+                                        <a class="page-numbers" href="?{{ s }}page={{ p }}">{{ p }}</a>
+                                    {% endif %}
+
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <a class="page-numbers" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                {% endif %}
+                            </div>
+                            </div>
+                        {% endif %}
                 </div>
             </div>
         </div>

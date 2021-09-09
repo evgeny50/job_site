@@ -59,8 +59,8 @@ class FormCreateCompany(forms.ModelForm):
 class FormCreateVacancy(forms.ModelForm):
     class Meta:
         model = Vacancy
-        fields = ['title', 'specialty', 'salary_min',
-                  'salary_max', 'skills', 'description']
+        fields = ['title', 'salary_min',
+                  'salary_max', 'description']
         widgets = {
             'title': forms.TextInput(
                 attrs={'class': 'form-control'}),

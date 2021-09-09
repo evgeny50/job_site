@@ -20,15 +20,6 @@
                         <!-- Tab -->
                         <section class="tab-pane fade show active">
                             <h2 class="h4 pt-2 pb-3">Информация о Вакансии</h2>
-                            {% for message in messages %}
-                                {{ message.tags }}
-                                {% if message.tags == 'success' %}
-                                    <p class="alert alert-info" role="alert">
-                                        Информация о вакансии обновлена
-                                    </p>
-                                {% endif %}
-                            {% endfor %}
-
                             <form method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="row">
@@ -77,8 +68,6 @@
                                 <div class="form-group">
                                     <button class="btn btn-info" type="submit">Save</button>
                                 </div>
-
-
                             </form>
                         </section>
                         <!-- END Tab -->

@@ -28,3 +28,11 @@ def get_name_company(form):
         return 'Такая компания уже сущ'
 
 
+def get_vacancy_on_slug(slug):
+    try:
+        vacancy = Vacancy.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        return None
+    return vacancy
+
+
