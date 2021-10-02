@@ -17,7 +17,9 @@ def get_my_company(request):
 
 def get_vacancies(request):
     try:
-        vacancies = Vacancy.objects.filter(company_id=get_my_company(request).pk)
+        vacancies = Vacancy.objects.filter(
+            company_id=get_my_company(request).pk
+        )
     except AttributeError:
         return None
     return vacancies
@@ -34,5 +36,3 @@ def get_vacancy_on_slug(slug):
     except ObjectDoesNotExist:
         return None
     return vacancy
-
-

@@ -4,6 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.core.paginator import Paginator
 
+from vacancy.models import Application
+
+
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import Http404
@@ -135,10 +138,12 @@ class EditVacancy(View):
 
     def get(self, request, slug):
         vacancy = get_vacancy_on_slug(slug)
+        application = Application.objects.filter(vacancy__pk=vacancy.pk)
         if not vacancy:
             raise Http404
         form = self.form_class(instance=vacancy)
-        return render(request, 'cabinet/create_vacancy.html', {'form': form})
+        return render(request, 'cabinet/create_vacancy.html', {'form': form,
+                                                               'applications': application})
 
     def post(self, request, slug):
         vacancy = get_vacancy_on_slug(slug)

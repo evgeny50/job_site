@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Company, Specialty, Skill, Vacancy
+from .models import Company, Specialty, Skill, Vacancy, Application
 
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -21,6 +21,11 @@ class CompanyAdmin(admin.ModelAdmin):
     get_photo.short_description = 'Фото'
 
 
+class ApplicationAdmin(admin.ModelAdmin):
+    list_display = ('written_username', 'written_phone',
+                    'written_cover_letter')
+
+
 class SpecialtyAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
@@ -37,6 +42,7 @@ class VacancyAdmin(admin.ModelAdmin):
     search_fields = ('title', 'company__name', 'description', 'slug')
 
 
+admin.site.register(Application, ApplicationAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Specialty, SpecialtyAdmin)
 admin.site.register(Skill)

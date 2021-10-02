@@ -157,7 +157,6 @@ class Application(models.Model):
         max_length=255,
         verbose_name='Имя')
     written_phone = models.IntegerField(
-        unique=True,
         verbose_name='Телефон')
     written_cover_letter = models.TextField(
         verbose_name='Сопроводительное письмо')

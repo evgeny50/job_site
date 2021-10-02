@@ -34,7 +34,7 @@
                                             <div class="col-6 col-lg-8">
                                                 <a href="{{ vacancy.get_absolute_url }}" class="mb-1">{{ vacancy.title }}</a>
                                                 <p class="mb-1">
-                                                    <span class="mr-4">{{ vacancy.salary_max }}</span><a href="#" class="text-info">3 отклика</a>
+                                                    <span class="mr-4">{{ vacancy.salary_max }}</span><a href="#" class="text-info">{{ vacancy.applications.count}}</a>
                                                 </p>
                                             </div>
                                             <div class="col-6 col-lg-4 text-right">

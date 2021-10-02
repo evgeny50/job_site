@@ -30,4 +30,8 @@ def get_company(self):
             }
 
 
+def get_vacancy(slug):
+    return Vacancy.objects.get(slug=slug)
+
+
 

@@ -15,10 +15,10 @@
                                     <div class="col-12 col-md-8 col-lg-9">
                                         <h2 class="h2 pb-2">
                                             <a href="{{ vacancy.get_absolute_url }}">
-                                            {{ vacancy.title }}</a></h2>
+                                                {{ vacancy.title }}</a></h2>
                                         {% for skill in vacancy.skills.all %}
-                                        <p class="mb-2">{{ skill }}</p>
-                                            {% endfor %}
+                                            <p class="mb-2">{{ skill }}</p>
+                                        {% endfor %}
                                         <p>От {{ vacancy.salary_min }} до {{ vacancy.salary_max }} руб.</p>
                                         <p class="text-muted pt-1">{{ vacancy.created_at }}</p>
                                     </div>

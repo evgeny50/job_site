@@ -1,12 +1,18 @@
+from django.views import View
+
 from vacancy.models import Vacancy
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .servises.servises import get_all_speciality, get_all_company, \
-    get_all_vacancies, get_vacancy_by_specialization, get_title_specialization,\
-    get_company
+    get_all_vacancies, get_vacancy_by_specialization, get_title_specialization, \
+    get_company, get_vacancy
+
+from .forms import SendCoverLetterForm
 
 from django.views.generic import ListView, DetailView
+
+from django.http import HttpResponseRedirect
 
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators import csrf
@@ -63,10 +69,23 @@ class ViewCompany(ListView):
         return get_company(self)
 
 
-class ViewVacancy(DetailView):
-    model = Vacancy
-    template_name = 'vacancy/vacancy.html'
-    context_object_name = 'vacancy'
+class ViewVacancy(View):
+    form_class = SendCoverLetterForm
+
+    def get(self, request, slug):
+        vacancy = get_vacancy(slug)
+        form = self.form_class
+        return render(request, 'vacancy/vacancy.html', {
+            'vacancy': vacancy, 'form': form
+        })
+
+    def post(self, request, slug):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.instance.vacancy = Vacancy.objects.get(slug=slug)
+            form.save()
+            return render(request, 'vacancy/send.html')
 
 
 def vacancy_api_detail(request, pk):
@@ -74,4 +93,3 @@ def vacancy_api_detail(request, pk):
         vacancy = Vacancy.objects.get(pk=pk, published_at=True)
         serializer = VacancySerializer(vacancy)
         return JsonResponse(serializer.data)
-
