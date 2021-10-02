@@ -46,28 +46,41 @@
                             {% endfor %}
                             <!-- END vacancy state 1 -->
                         </section>
-                        <div class="form-group mt-4">
+
+                        <!-- Pagination -->
+                        <div style="padding-left: 40%" class="mt-4">
+                            {% if page_obj.has_other_pages %}
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        {% if page_obj.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% for page in page_obj.paginator.page_range %}
+                                            {% if page == page_obj.number %}
+                                                <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                                            {% elif page > page_obj.number|add:-2 and page < page_obj.number|add:2 %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if page_obj.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            {% endif  %}
+                        </div>
+                    <div class="form-group mt-2">
                             <a href="{% url 'create_vacancy' %}"><button class="btn btn-info" type="submit">Add vacancy</button></a>
                         </div>
-                        {% if page_obj.has_other_pages %}
-                            <div class="nav-links">
-                                {% if page_obj.has_previous %}
-                                    <a class="page-numbers" href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-                                {% endif %}
-                                {% for p in page_obj.paginator.page_range %}
-                                    {% if page_obj.number == p %}
-                                        <span class="page-numbers current">{{ p }}</span>
-                                    {% else %}
-                                        <a class="page-numbers" href="?{{ s }}page={{ p }}">{{ p }}</a>
-                                    {% endif %}
-
-                                {% endfor %}
-                                {% if page_obj.has_next %}
-                                    <a class="page-numbers" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                {% endif %}
-                            </div>
-                            </div>
-                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ class Vacancy(models.Model):
         'Specialty',
         related_name='vacancies',
         verbose_name='Специализация',
-    blank=True, null=True)
+        blank=True)
     slug = models.SlugField(
         max_length=255,
         unique=True,
@@ -30,7 +30,7 @@ class Vacancy(models.Model):
         'Skill',
         verbose_name='Требуемые навыки',
         related_name='skills',
-        blank=True, null=True)
+        blank=True)
     description = models.TextField(
         verbose_name='Описание вакансии')
     salary_min = models.IntegerField(
@@ -48,6 +48,9 @@ class Vacancy(models.Model):
         verbose_name='Дата создания')
     update_at = models.DateField(
         auto_now=True)
+    contacts = models.TextField(
+        max_length=250,
+        null=True)
 
     def __str__(self):
         return self.title
@@ -122,8 +125,7 @@ class Specialty(models.Model):
         verbose_name='Url')
     image = models.ImageField(
         upload_to='specialty/%Y/%m/%d/',
-        verbose_name='Картинка',
-        blank=True)
+        verbose_name='Картинка')
 
     def __str__(self):
         return self.title

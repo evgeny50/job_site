@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import home_page, Vacancies, VacancyBySpecialization, ViewCompany,\
-    ViewVacancy
+    ViewVacancy, vacancy_api_detail
 
 from django.conf import settings
 
@@ -13,6 +13,7 @@ urlpatterns = [
     path('vacancies/<slug:specialization>/', VacancyBySpecialization.as_view(), name='specialization'),
     path('company/<slug:company>/', ViewCompany.as_view(), name='company'),
     path('vacancy/<slug:slug>/', ViewVacancy.as_view(), name='vacancy'),
+    path('api/vacancy/<int:pk>/', vacancy_api_detail, name='api_vacancy')
 ]
 
 if settings.DEBUG:

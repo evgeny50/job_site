@@ -1,4 +1,4 @@
-import vacancy.models
+from vacancy.models import Vacancy
 
 from django.shortcuts import render
 
@@ -7,6 +7,12 @@ from .servises.servises import get_all_speciality, get_all_company, \
     get_company
 
 from django.views.generic import ListView, DetailView
+
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators import csrf
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from .serializers import VacancySerializer
 
 
 def home_page(request):
@@ -58,9 +64,14 @@ class ViewCompany(ListView):
 
 
 class ViewVacancy(DetailView):
-    model = vacancy.models.Vacancy
+    model = Vacancy
     template_name = 'vacancy/vacancy.html'
     context_object_name = 'vacancy'
 
 
+def vacancy_api_detail(request, pk):
+    if request.method == 'GET':
+        vacancy = Vacancy.objects.get(pk=pk, published_at=True)
+        serializer = VacancySerializer(vacancy)
+        return JsonResponse(serializer.data)
 

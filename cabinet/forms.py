@@ -60,12 +60,13 @@ class FormCreateVacancy(forms.ModelForm):
     class Meta:
         model = Vacancy
         fields = ['title', 'salary_min',
-                  'salary_max', 'description']
+                  'salary_max', 'specialty', 'description']
         widgets = {
             'title': forms.TextInput(
                 attrs={'class': 'form-control'}),
-            'specialty': forms.Select(
-                attrs={'class': 'form-control'}),
+            'specialty': forms.SelectMultiple(
+                attrs={'class': 'form-control'}
+                ),
             'salary_min': forms.TextInput(
                 attrs={'class': 'form-control'}),
             'salary_max': forms.TextInput(

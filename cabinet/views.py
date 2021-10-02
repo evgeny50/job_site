@@ -1,18 +1,19 @@
+from django.contrib import messages
+from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.core.paginator import Paginator
 
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.http import Http404
 
-from django.contrib.auth import login, logout
 
 from .forms import FormRegisterUser, FormLoginUser, FormCreateCompany, \
     FormCreateVacancy
 
 from .servises.servises import get_my_company, get_vacancies, \
     get_vacancy_on_slug
-from django.contrib import messages
-from django.http import Http404
 
 
 def register_user(request):
@@ -60,7 +61,7 @@ def my_company(request):
 
 def listing(request):
     vacancies = get_vacancies(request)
-    paginator = Paginator(vacancies, 2)
+    paginator = Paginator(vacancies, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return page_obj
@@ -118,6 +119,7 @@ class CreateVacancy(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
+        print(form)
         if form.is_valid():
             form.instance.company_id = get_my_company(request).pk
             form.save()

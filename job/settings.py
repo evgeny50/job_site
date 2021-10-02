@@ -29,6 +29,8 @@ INSTALLED_APPS = [
 
     'vacancy.apps.VacancyConfig',
     'cabinet.apps.CabinetConfig',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -46,8 +48,7 @@ ROOT_URLCONF = 'job.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

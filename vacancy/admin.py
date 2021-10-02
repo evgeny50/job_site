@@ -28,7 +28,7 @@ class SpecialtyAdmin(admin.ModelAdmin):
 class VacancyAdmin(admin.ModelAdmin):
     fields = ('title', 'slug', 'description', 'company', 'specialty',
               'skills', 'salary_min', 'salary_max', 'published_at',
-              'created_at')
+              'created_at', 'contacts')
     readonly_fields = ('update_at', 'created_at')
     prepopulated_fields = {'slug': ('title',)}
     list_display = ('title', 'company', 'created_at', 'published_at')
