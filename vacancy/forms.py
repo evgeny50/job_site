@@ -15,3 +15,22 @@ class SendCoverLetterForm(forms.ModelForm):
             'written_cover_letter': forms.Textarea(
                 attrs={'class': 'form-control'})
         }
+
+
+class SearchForm(forms.Form):
+    q = forms.CharField(max_length=255,
+                        widget=forms.TextInput(
+                            attrs={
+                                    'class': 'form-control mr-sm-2 mx-auto',
+                                    'type': 'text',
+                                    'value': 'Backend'}))
+
+
+class HomeSearchForm(forms.Form):
+    q = forms.CharField(max_length=255,
+                        widget=forms.TextInput(
+                            attrs={'class': 'form-control w-100',
+                                   'type': 'search',
+                                   'placeholder': 'Найти работу или стажировку',
+                                   'aria-label': 'Найти работу или стажировку'}
+                        ))

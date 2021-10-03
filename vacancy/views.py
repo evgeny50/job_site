@@ -4,11 +4,13 @@ from vacancy.models import Vacancy
 
 from django.shortcuts import render, redirect
 
+from django.db.models import Q
+
 from .servises.servises import get_all_speciality, get_all_company, \
     get_all_vacancies, get_vacancy_by_specialization, get_title_specialization, \
     get_company, get_vacancy
 
-from .forms import SendCoverLetterForm
+from .forms import SendCoverLetterForm, SearchForm,HomeSearchForm
 
 from django.views.generic import ListView, DetailView
 
@@ -22,11 +24,15 @@ from .serializers import VacancySerializer
 
 
 def home_page(request):
+    query = request.GET.get('q')
+    if query:
+        return search(request, query=query)
     context = {
         'first_four_speciality': get_all_speciality()[:4],
         'second_four_speciality': get_all_speciality()[4:8],
         'first_four_company': get_all_company()[:4],
-        'second_four_company': get_all_company()[4:8]
+        'second_four_company': get_all_company()[4:8],
+        'form': HomeSearchForm()
     }
     return render(request, 'index.html', context)
 
@@ -86,6 +92,22 @@ class ViewVacancy(View):
             form.instance.vacancy = Vacancy.objects.get(slug=slug)
             form.save()
             return render(request, 'vacancy/send.html')
+
+
+def search(request, query=None):
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            if not query:
+                query = request.GET.get('q')
+            vacancy = Vacancy.objects.filter(
+                Q(title__icontains=query)
+                | Q(description__icontains=query))
+            return render(request, 'vacancy/search.html',
+                          {'form': form, 'search': query, 'vacancy': vacancy})
+    form = SearchForm()
+    return render(request, 'vacancy/search.html',
+                  {'form': form, 'search': request.GET.get('q')})
 
 
 def vacancy_api_detail(request, pk):
