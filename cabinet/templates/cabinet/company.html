@@ -3,14 +3,14 @@
 {% block main %}
   <main class="container mt-3">
     <div class="navbar mt-5">
-      <p><a href="{% url 'create_company' %}">Назад</a></p>
+      <p><a href="{% url 'create_company' %}">Back</a></p>
     </div>
     <section>
       <div class="text-center">
         <img src="https://place-hold.it/130x80" width="130" height="80" alt="">
       </div>
       <h1 class="h1 text-center mx-auto mt-0 pt-1" style="font-size: 70px;"><strong>{{ company|capfirst }}</strong></h1>
-      <p class="text-center pt-1">Компания, {{ company.city }}, {{ company.vacancies.count }} вакансий</p>
+      <p class="text-center pt-1">Company, {{ company.city }}, {{ company.vacancies.count }} vacancies</p>
       <div class="row mt-5">
         <div class="col-12 col-lg-8 offset-lg-2 m-auto">
 {#            {% for vacancy in company.vacancies %}#}

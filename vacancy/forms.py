@@ -11,7 +11,8 @@ class SendCoverLetterForm(forms.ModelForm):
             'written_username': forms.TextInput(
                 attrs={'class': 'form-control'}),
             'written_phone': forms.NumberInput(
-                attrs={'class': 'form-control'}),
+                attrs={'class': 'form-control',
+                       'type': 'tel'}),
             'written_cover_letter': forms.Textarea(
                 attrs={'class': 'form-control'})
         }
@@ -31,6 +32,6 @@ class HomeSearchForm(forms.Form):
                         widget=forms.TextInput(
                             attrs={'class': 'form-control w-100',
                                    'type': 'search',
-                                   'placeholder': 'Найти работу или стажировку',
-                                   'aria-label': 'Найти работу или стажировку'}
+                                   'placeholder': 'Find a job or internship',
+                                   }
                         ))

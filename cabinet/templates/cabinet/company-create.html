@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-<title>{% block title %}Создать карточку компании | Джуманджи{% endblock %}
+<title>{% block title %}Create a company| Джуманджи{% endblock %}
 </title>
 {% block main %}
     <style>
@@ -19,15 +19,16 @@
                 <div class="card-body px-4 pb-4">
                     {% with request.resolver_match.url_name as url_name %}
                         {% if url_name == 'my_company' %}
-                                <h1 class="h4 pt-2">Моя компания</h1>
-                                <p class="mt-2">Пока мы думаем, что вы – частное лицо. Хотите создать карточку компании, разместить информаию и вакансии?</p>
-                                <a href="{% url 'create_company' %}" class="btn btn-info mb-2">Создать карточку компании</a>
-                        {% elif url_name == 'create_vacancy'%}
-                                <h1 class="h4 pt-2">Вакансии</h1>
-                                <p class="alert alert-info" role="alert">
-                                    У вас пока нет вакансий, но вы можете создать новую!
-                                </p>
+                                <h1 class="h4 pt-2">My company</h1>
+                                <p class="mt-2">For now, we think that you are a private person. Do you want to create a company card, post information and vacancies?</p>
+                                <a href="{% url 'create_company' %}" class="btn btn-info mb-2">Create a company</a>
+                        {% elif url_name == 'vacancies'%}
+                            {% if not vacancies %}
+                                <h1 class="h4 pt-2">Vacancies</h1>
+                                <p class="mt-2">You have no vacancies yet, but you can create a new one!</p>
                                 <a href="{% url 'create_vacancy' %}" class="btn btn-info mb-2">Create vacancy</a>
+                            {% endif %}
+
 
                         {% endif %}
                     {% endwith %}

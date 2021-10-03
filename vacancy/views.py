@@ -7,10 +7,10 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 
 from .servises.servises import get_all_speciality, get_all_company, \
-    get_all_vacancies, get_vacancy_by_specialization, get_title_specialization, \
-    get_company, get_vacancy
+    get_all_vacancies, get_vacancy_by_specialization, \
+    get_title_specialization, get_company, get_vacancy
 
-from .forms import SendCoverLetterForm, SearchForm,HomeSearchForm
+from .forms import SendCoverLetterForm, SearchForm, HomeSearchForm
 
 from django.views.generic import ListView, DetailView
 
@@ -52,6 +52,7 @@ class Vacancies(ListView):
 
 
 class VacancyBySpecialization(ListView):
+    """Displaying vacancies by profession"""
     template_name = 'vacancy/vacancies_by_specialization.html'
     context_object_name = 'vacancies'
 
@@ -68,6 +69,7 @@ class VacancyBySpecialization(ListView):
 
 
 class ViewCompany(ListView):
+    """View all companies"""
     template_name = 'vacancy/company.html'
     context_object_name = 'company'
 
@@ -76,6 +78,10 @@ class ViewCompany(ListView):
 
 
 class ViewVacancy(View):
+    """
+    Detailed view of the vacancy
+    and sending a response form
+    """
     form_class = SendCoverLetterForm
 
     def get(self, request, slug):
@@ -86,6 +92,8 @@ class ViewVacancy(View):
         })
 
     def post(self, request, slug):
+        if not request.user.is_authenticated:
+            return redirect('login')
         form = self.form_class(request.POST)
         if form.is_valid():
             form.instance.user = request.user
@@ -95,19 +103,17 @@ class ViewVacancy(View):
 
 
 def search(request, query=None):
+    form = SearchForm(request.GET or None)
+    if not query:
+        query = request.GET.get('q')
     if request.method == 'GET':
-        form = SearchForm(request.GET)
         if form.is_valid():
-            if not query:
-                query = request.GET.get('q')
             vacancy = Vacancy.objects.filter(
-                Q(title__icontains=query)
-                | Q(description__icontains=query))
+                Q(title__icontains=query, published_at=True)
+                | Q(description__icontains=query, published_at=True))
             return render(request, 'vacancy/search.html',
                           {'form': form, 'search': query, 'vacancy': vacancy})
-    form = SearchForm()
-    return render(request, 'vacancy/search.html',
-                  {'form': form, 'search': request.GET.get('q')})
+    return render(request, 'vacancy/search.html', {'form': form})
 
 
 def vacancy_api_detail(request, pk):

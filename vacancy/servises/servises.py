@@ -1,5 +1,7 @@
 from ..models import Vacancy, Company, Specialty
 
+from django.core.exceptions import ObjectDoesNotExist
+
 
 def get_all_speciality():
     return Specialty.objects.all()
@@ -31,7 +33,9 @@ def get_company(self):
 
 
 def get_vacancy(slug):
-    return Vacancy.objects.get(slug=slug)
-
+    try:
+        return Vacancy.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        return None
 
 

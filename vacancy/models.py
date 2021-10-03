@@ -40,6 +40,9 @@ class Vacancy(models.Model):
         default=0,
         verbose_name='Зарплата до',
         blank=True)
+    photo = models.ImageField(
+        default='https://lh3.googleusercontent.com/proxy/nJpMrdjl7yHyzXn5sVozLj0_58CGJROQZrc0laXKXvdWY3N9co4tBFWM2_lpn2rVIi_R4rEIo0-fB5QAcPdOVVtLDrdSbn68nXsyE8rNft-y07fG0WbOGvepc7uXKCQ',
+        blank=True)
     published_at = models.BooleanField(
         default=True,
         verbose_name='Опубликовано')
@@ -50,7 +53,7 @@ class Vacancy(models.Model):
         auto_now=True)
     contacts = models.TextField(
         max_length=250,
-        null=True)
+        blank=True)
 
     def __str__(self):
         return self.title
