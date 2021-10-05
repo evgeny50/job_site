@@ -21,7 +21,9 @@
 <p>Перейти в директорию job_site</p>
 <pre><code>pip install -r requirements.txt
 </code></pre>
-<p>Выполнить миграции</p>
+<p>Создать и выполнить миграции</p>
+<pre><code>python manage.py makemigrations
+</code></pre>
 <pre><code>python manage.py migrate
 </code></pre>
 <p>Запустить сервер</p>
