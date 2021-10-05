@@ -16,9 +16,9 @@
 <pre><code>python3 -m venv env
 </code></pre>
 <p>Активировать виртуальное окружение</p>
-<pre><code>source/env/bin/activate
+<pre><code>source env/bin/activate
 </code></pre>
-<p>Перейти в директорию job</p>
+<p>Перейти в директорию job_site</p>
 <pre><code>pip install -r requirements.txt
 </code></pre>
 <p>Выполнить миграции</p>
