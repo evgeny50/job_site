@@ -4,22 +4,16 @@ from vacancy.models import Vacancy
 
 from django.shortcuts import render, redirect
 
-from django.db.models import Q
-
 from .servises.servises import get_all_speciality, get_all_company, \
     get_all_vacancies, get_vacancy_by_specialization, \
-    get_title_specialization, get_company, get_vacancy
+    get_title_specialization, get_company, get_vacancy, \
+    get_vacancy_contains_query
 
 from .forms import SendCoverLetterForm, SearchForm, HomeSearchForm
 
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 
-from django.http import HttpResponseRedirect
-
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators import csrf
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+from django.http import JsonResponse
 from .serializers import VacancySerializer
 
 
@@ -57,14 +51,13 @@ class VacancyBySpecialization(ListView):
     context_object_name = 'vacancies'
 
     def get_queryset(self):
-        global queryset
         queryset = get_vacancy_by_specialization(self)
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = get_title_specialization(self)
-        context['count'] = len(queryset)
+        context['count'] = len(self.get_queryset())
         return context
 
 
@@ -108,11 +101,10 @@ def search(request, query=None):
         query = request.GET.get('q')
     if request.method == 'GET':
         if form.is_valid():
-            vacancy = Vacancy.objects.filter(
-                Q(title__icontains=query, published_at=True)
-                | Q(description__icontains=query, published_at=True))
-            return render(request, 'vacancy/search.html',
-                          {'form': form, 'search': query, 'vacancy': vacancy})
+            vacancy = get_vacancy_contains_query(query)
+            return render(request, 'vacancy/search.html', {'form': form,
+                                                           'search': query,
+                                                           'vacancy': vacancy})
     return render(request, 'vacancy/search.html', {'form': form})
 
 

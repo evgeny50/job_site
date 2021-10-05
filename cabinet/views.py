@@ -142,8 +142,10 @@ class EditVacancy(View):
         if not vacancy:
             raise Http404
         form = self.form_class(instance=vacancy)
-        return render(request, 'cabinet/create_vacancy.html', {'form': form,
-                                                               'applications': application})
+        return render(request,
+                      'cabinet/create_vacancy.html',
+                      {'form': form,
+                       'applications': application})
 
     def post(self, request, slug):
         vacancy = get_vacancy_on_slug(slug)

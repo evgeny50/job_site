@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from django.contrib.auth.models import User
 
-from vacancy.models import Company, Vacancy
+from vacancy.models import Company, Vacancy, Specialty
 
 from django import forms
 
@@ -60,18 +60,17 @@ class FormCreateVacancy(forms.ModelForm):
     class Meta:
         model = Vacancy
         fields = ['title', 'salary_min',
-                  'salary_max', 'specialty', 'description']
+                  'salary_max', 'specialty', 'description', 'skills']
         widgets = {
             'title': forms.TextInput(
                 attrs={'class': 'form-control'}),
-            'specialty': forms.SelectMultiple(
-                attrs={'class': 'form-control'}
-                ),
+            'specialty': forms.Select(
+                attrs={'class': 'custom-select mr-sm-2'}),
             'salary_min': forms.TextInput(
                 attrs={'class': 'form-control'}),
             'salary_max': forms.TextInput(
                 attrs={'class': 'form-control'}),
-            'skills': forms.Textarea(
+            'skills': forms.SelectMultiple(
                 attrs={'class': 'form-control', 'rows': 2}),
             'description': forms.Textarea(
                 attrs={'class': 'form-control', 'rows': 5})

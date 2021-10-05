@@ -12,11 +12,11 @@ class Vacancy(models.Model):
     title = models.CharField(
         max_length=255,
         verbose_name='Название вакансии')
-    specialty = models.ManyToManyField(
+    specialty = models.ForeignKey(
         'Specialty',
+        on_delete=models.CASCADE,
         related_name='vacancies',
-        verbose_name='Специализация',
-        blank=True)
+        verbose_name='Специализация')
     slug = models.SlugField(
         max_length=255,
         unique=True,
