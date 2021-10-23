@@ -19,7 +19,7 @@
                     <div class="card-body px-4 pb-4">
                         <!-- Tab -->
                         <section class="tab-pane fade show active">
-                                <h2 class="h4 pt-2 pb-3">Информация о компании</h2>
+                            <h2 class="h4 pt-2 pb-3">Информация о компании</h2>
                             {% for message in messages %}
                                 {% if message.tags == 'success' %}
                                     <p class="alert alert-info" role="alert">
@@ -51,7 +51,12 @@
 
                                                 </div>
                                                 <div class="col-6" style="position: relative;">
-                                                    <div class="input-group-prepend" style="position: absolute; top: 0;right: 15px;">
+                                                    <div class="input-group-prepend" style="position: relative; top: 6px;right: 15px;">
+                                                        <label class="btn btn-info px-4">
+                                                        Load logo
+                                                        {{ form.logo }}
+                                                    </label>
+
 
                                                         {#                                                        <span class="btn btn-info px-4">Загрузить</span>#}
                                                     </div>

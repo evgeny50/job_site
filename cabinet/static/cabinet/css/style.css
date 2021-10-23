@@ -1,0 +1,27 @@
+.form-signin {
+    border: solid #ccc 1px;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 48px;
+}
+
+.btn-primary {
+    background-color: #1e88e5;
+    border-color: #1e88e5;
+    border-radius: 45px;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1c80d8;
+}
+
+.navbar navbar-expand-lg navbar-light {
+    background-color: #29a184;
+}
+
+.form-button a {
+    color: #2998ff;
+    margin: 0 10px 0 10px;
+}
+

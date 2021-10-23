@@ -9,12 +9,15 @@ class SendCoverLetterForm(forms.ModelForm):
         fields = ('written_username', 'written_phone', 'written_cover_letter')
         widgets = {
             'written_username': forms.TextInput(
-                attrs={'class': 'form-control'}),
+                attrs={'class': 'form-control'}
+            ),
             'written_phone': forms.NumberInput(
                 attrs={'class': 'form-control',
-                       'type': 'tel'}),
+                       'type': 'tel'}
+            ),
             'written_cover_letter': forms.Textarea(
-                attrs={'class': 'form-control'})
+                attrs={'class': 'form-control'}
+            )
         }
 
 
@@ -24,7 +27,10 @@ class SearchForm(forms.Form):
                             attrs={
                                     'class': 'form-control mr-sm-2 mx-auto',
                                     'type': 'text',
-                                    'value': 'Backend'}))
+                                    'value': 'Backend',
+                            }
+                        )
+                        )
 
 
 class HomeSearchForm(forms.Form):
@@ -33,5 +39,6 @@ class HomeSearchForm(forms.Form):
                             attrs={'class': 'form-control w-100',
                                    'type': 'search',
                                    'placeholder': 'Find a job or internship',
-                                   }
-                        ))
+                            }
+                        )
+                        )

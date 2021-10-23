@@ -1,11 +1,11 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 
-from .views import home_page, Vacancies, VacancyBySpecialization, ViewCompany, \
+from .views import (
+    home_page, Vacancies, VacancyBySpecialization, ViewCompany,
     vacancy_api_detail, ViewVacancy, search
-
-from django.conf import settings
-
-from django.conf.urls.static import static
+)
 
 urlpatterns = [
     path('', home_page, name='home_page'),
@@ -19,5 +19,7 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
