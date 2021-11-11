@@ -1,26 +1,41 @@
-<header class="container mt-3">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand mr-4" href="{% url 'home_page' %}">Джуманджи</a>
+<header class="container mt-1">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand mr-4" href="{% url 'home_page' %}"><img class="navbar-brand mr-4" src="/media/logo.png" width="140px" height="60px"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
             <ul class="navbar-nav col-10">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Vacancies</a>
+                    <a class="nav-link" href="{% url 'all_vacancies' %}">Vacancies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'all_resume' %}">Resumes</a>
                 </li>
             </ul>
             {% if user.is_authenticated %}
                 <ul class="navbar-nav col-2 justify-content-end">
+                <ul class="navbar-nav col-10">
+                    <li class="nav-item">
+                        <a class="nav-link"><strong>Hi {{ user.username }}!</strong></a>
+                    </li>
+                </ul>
                 <li class="nav-item active">
                 <div class="btn-group">
-                    <button type="button" class="btn dropdown-toggle font-weight-bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ user.username }}
+                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 20 20">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right mt-3">
                         <a href="#" class="dropdown-item py-2">Profile</a>
                         <a href="#" class="dropdown-item py-2">Summary</a>
-                        <a href="{% url 'my_company' %}" class="dropdown-item py-2">My company</a>
+                        {% if request.user.is_staff %}
+                            <a href="{% url 'my_profile' %}" class="dropdown-item py-2">My company</a>
+                        {% else %}
+                            <a href="{% url 'users_resume' %}" class="dropdown-item py-2">My resume</a>
+                        {% endif %}
+
                         <a href="{% url 'logout' %}" class="dropdown-item py-2">Logout</a>
                     </div>
                 </div>

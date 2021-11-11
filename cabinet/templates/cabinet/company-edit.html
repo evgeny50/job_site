@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-<title>{% block title %}Моя компания | Джуманджи{% endblock %}</title>
+<title>{% block title %}My company{% endblock %}</title>
 
 {% block main %}
     <style>
@@ -11,19 +11,23 @@
     <body>
     <main class="container mt-3 pb-5">
         <div class="row mt-5">
-            <div class="col-12 col-lg-4">
+            {% if logo %}
+                <div class="col-12 col-lg-4">
                 {% include 'include/sidebar.html' %}
+            {% else %}
+                <div class="col-12 col-lg-2">
+            {% endif %}
             </div>
             <div class="col-12 col-lg-8">
                 <div class="card">
                     <div class="card-body px-4 pb-4">
                         <!-- Tab -->
                         <section class="tab-pane fade show active">
-                            <h2 class="h4 pt-2 pb-3">Информация о компании</h2>
+                            <h2 class="h4 pt-2 pb-3">Information about the company</h2>
                             {% for message in messages %}
                                 {% if message.tags == 'success' %}
                                     <p class="alert alert-info" role="alert">
-                                        Информация о компании обновлена
+                                        Company information updated
                                     </p>
                                 {% endif %}
                             {% endfor %}
@@ -40,7 +44,7 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label class="mb-2 text-dark" for="companyLogo">Логотип</label>
+                                            <label class="mb-2 text-dark" for="companyLogo">Logo</label>
                                             <div class="row align-items-center">
                                                 <div class="col-6">
                                                     {% if logo %}
@@ -53,12 +57,10 @@
                                                 <div class="col-6" style="position: relative;">
                                                     <div class="input-group-prepend" style="position: relative; top: 6px;right: 15px;">
                                                         <label class="btn btn-info px-4">
-                                                        Load logo
-                                                        {{ form.logo }}
-                                                    </label>
+                                                            Load logo
+                                                            {{ form.logo }}
+                                                        </label>
 
-
-                                                        {#                                                        <span class="btn btn-info px-4">Загрузить</span>#}
                                                     </div>
                                                     <div class="input-group-prepend" style="">
                                                         {{ form.logo }}
@@ -97,7 +99,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </main>
     </body>
 {% endblock %}

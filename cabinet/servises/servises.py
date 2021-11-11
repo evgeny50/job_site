@@ -1,18 +1,8 @@
-import django.db
-
-from vacancy.models import Company, Vacancy
-
-from django.contrib.auth.models import User
-
 from django.core.exceptions import ObjectDoesNotExist
 
-
-def get_my_company(request):
-    try:
-        company = Company.objects.get(owner=request.user)
-        return company
-    except ObjectDoesNotExist:
-        return None
+from resume.models import Resume
+from vacancy.models import Company, Vacancy
+from vacancy.servises.servises import get_my_company
 
 
 def get_vacancies(request):
@@ -27,12 +17,11 @@ def get_vacancies(request):
 
 def get_name_company(form):
     if len(Company.objects.filter(name=form['name'])) > 0:
-        return 'Такая компания уже сущ'
+        return ''
 
 
-def get_vacancy_on_slug(slug):
+def get_resume(request):
     try:
-        vacancy = Vacancy.objects.get(slug=slug)
+        return Resume.objects.filter(user=request.user.pk)
     except ObjectDoesNotExist:
         return None
-    return vacancy

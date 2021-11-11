@@ -17,6 +17,22 @@ def get_all_vacancies():
     return Vacancy.objects.all()
 
 
+def get_my_company(request):
+    try:
+        company = Company.objects.get(owner=request.user)
+        return company
+    except ObjectDoesNotExist:
+        return None
+
+
+def get_vacancy_on_slug(slug):
+    try:
+        vacancy = Vacancy.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        return None
+    return vacancy
+
+
 def get_vacancy_by_specialization(self):
     return Vacancy.objects.filter(
         specialty__slug=self.kwargs['specialization'])

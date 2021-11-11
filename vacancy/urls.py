@@ -4,12 +4,12 @@ from django.urls import path
 
 from .views import (
     home_page, Vacancies, VacancyBySpecialization, ViewCompany,
-    vacancy_api_detail, ViewVacancy, search
+    vacancy_api_detail, ViewVacancy, search, CreateVacancy, EditVacancy
 )
 
 urlpatterns = [
     path('', home_page, name='home_page'),
-    path('vacancies/', Vacancies.as_view(), name='vacancies'),
+    path('vacancies/', Vacancies.as_view(), name='all_vacancies'),
     path('vacancies/<slug:specialization>/', VacancyBySpecialization.as_view(),
          name='specialization'),
     path('company/<slug:company>/', ViewCompany.as_view(), name='company'),

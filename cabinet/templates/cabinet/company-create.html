@@ -1,27 +1,19 @@
 {% extends 'base.html' %}
 
-<title>{% block title %}Create a company| Джуманджи{% endblock %}
+<title>{% block title %}Create a company{% endblock %}
 </title>
 {% block main %}
-    <style>
-        body {
-            background-color: #F6F2E6;
-        }
-    </style>
+
     <body>
     <main class="container mt-3 pb-5">
-        <div class="row mt-5">
-            <div class="col-12 col-lg-4">
-                {% include 'include/sidebar.html' %}
-            </div>
-            <section class="col-12 col-lg-8">
-                <div class="card">
-                <div class="card-body px-4 pb-4">
+        <section class="col-12 col-lg-6 offset-lg-3 mt-5 card">
+            <div class="card-body px-4 pb-4">
+                {% if request.user.is_staff %}
                     {% with request.resolver_match.url_name as url_name %}
-                        {% if url_name == 'my_company' %}
-                                <h1 class="h4 pt-2">My company</h1>
-                                <p class="mt-2">For now, we think that you are a private person. Do you want to create a company card, post information and vacancies?</p>
-                                <a href="{% url 'create_company' %}" class="btn btn-info mb-2">Create a company</a>
+                        {% if url_name == 'my_profile' %}
+                            <h1 class="h4 pt-2">My company</h1>
+                            <p class="mt-2">For now, we think that you are a private person. Do you want to create a company card, post information and vacancies?</p>
+                            <a href="{% url 'create_company' %}" class="btn btn-info mb-2">Create a company</a>
                         {% elif url_name == 'vacancies'%}
                             {% if not vacancies %}
                                 <h1 class="h4 pt-2">Vacancies</h1>
@@ -29,13 +21,17 @@
                                 <a href="{% url 'create_vacancy' %}" class="btn btn-info mb-2">Create vacancy</a>
                             {% endif %}
 
-
                         {% endif %}
                     {% endwith %}
-                </div>
-                </div>
-            </section>
-        </div>
+                {% else %}
+
+                    <h1 class="h4 pt-2">My summary</h1>
+                    <p class="mt-2">You don't have a resume. Want to create it?</p>
+                    <a href="{% url 'create_resume' %}" class="btn btn-info mb-2">Create resume</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
     </main>
     </body>
 {% endblock %}

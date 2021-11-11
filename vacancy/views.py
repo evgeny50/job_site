@@ -1,16 +1,68 @@
-from django.http import JsonResponse
+from django.contrib import messages
+from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import ListView
 
 from .serializers import VacancySerializer
-from .forms import SendCoverLetterForm, SearchForm, HomeSearchForm
+from .forms import SendCoverLetterForm, SearchForm, HomeSearchForm, \
+    FormCreateVacancy
 from .servises.servises import (
     get_all_speciality, get_all_company, get_all_vacancies,
     get_vacancy_by_specialization, get_title_specialization, get_company,
-    get_vacancy, get_vacancy_contains_query
+    get_vacancy, get_vacancy_contains_query, get_my_company,
+    get_vacancy_on_slug
 )
-from vacancy.models import Vacancy
+from vacancy.models import Vacancy, Application
+
+
+class CreateVacancy(View):
+    """Create a vacancy for the company."""
+    template_name = 'cabinet/create_vacancy.html'
+    form_class = FormCreateVacancy
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.instance.company_id = get_my_company(request).pk
+            form.save()
+            messages.success(request, 'Success')
+            return redirect('vacancies')
+        return render(request, self.template_name, {'form': form})
+
+
+class EditVacancy(View):
+    """Edit and save vacancy."""
+    form_class = FormCreateVacancy
+    template_name = 'cabinet/create_vacancy.html'
+
+    def get(self, request, slug):
+        vacancy = get_vacancy_on_slug(slug)
+        application = Application.objects.filter(vacancy__pk=vacancy.pk)
+        if not vacancy:
+            raise Http404
+
+        form = self.form_class(instance=vacancy)
+        context = {
+            'form': form,
+            'applications': application,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, slug):
+        vacancy = get_vacancy_on_slug(slug)
+        form = self.form_class(request.POST, instance=vacancy)
+        if not vacancy:
+            raise Http404
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Success')
+            return redirect('vacancies')
+        return render(request, self.template_name, {'form': form})
 
 
 def home_page(request):
@@ -74,7 +126,8 @@ class ViewVacancy(View):
         vacancy = get_vacancy(slug)
         form = self.form_class
         return render(request, 'vacancy/vacancy.html', {
-            'vacancy': vacancy, 'form': form
+            'vacancy': vacancy,
+            'form': form
         })
 
     def post(self, request, slug):
@@ -95,11 +148,11 @@ def search(request, query=None):
     if request.method == 'GET':
         if form.is_valid():
             vacancy = get_vacancy_contains_query(query)
-            return render(
-                request,
-                'vacancy/search.html',
-                {'form': form, 'search': query, 'vacancy': vacancy}
-            )
+            return render(request, 'vacancy/search.html', {
+                'form': form,
+                'search': query,
+                'vacancy': vacancy
+            })
     return render(request, 'vacancy/search.html', {'form': form})
 
 

@@ -2,7 +2,7 @@
     <h1 class="h4 pt-2 pb-2">Моя компания</h1>
     <div class="nav flex-column nav-pills">
         {% with request.resolver_match.url_name as url_name %}
-            <a class="nav-link {% if url_name == 'my_company' %}active{% elif url_name == 'create_company' %}active{% endif %}" href="{% url 'my_company' %}">1. Информация о&nbsp;компании</a>
+            <a class="nav-link {% if url_name == 'my_profile' %}active{% elif url_name == 'create_company' %}active{% endif %}" href="{% url 'my_profile' %}">1. Информация о&nbsp;компании</a>
             <a class="nav-link {% if url_name == 'vacancies' %}active{% elif url_name == 'create_vacancy' %}active{% endif %}" href="{% url 'vacancies' %}">2. Вакансии</a>
         {% endwith %}
     </div>

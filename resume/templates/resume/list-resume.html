@@ -1,50 +1,57 @@
 {% extends 'base.html' %}
-<title>{% block title %}Вакансии компании | Джуманджи{% endblock %}</title>
+<title>{% block title %}My resumes{% endblock %}</title>
 
 {% block main %}
-    <style>
-        body {
-            background-color: #F6F2E6;
-        }
-    </style>
 
     <body>
     <main class="container mt-3 pb-5">
         <div class="row mt-5">
-            <div class="col-12 col-lg-4">
-                {% include 'include/sidebar.html' %}
+            <div class="col-12 col-lg-2">
             </div>
             <div class="col-12 col-lg-8">
                 <div class="card">
                     <div class="card-body px-4 pb-4">
                         <section class="tab-pane fade show active">
-                            <h2 class="h4 pt-2 pb-3">Вакансии</h2>
+                            <h2 class="h4 pt-2 pb-3">My resumes</h2>
                             {% for message in messages %}
-                                {% if message.tags == 'success' %}
+                                {% if message.message == 'create_success' %}
                                     <p class="alert alert-info mb-4" role="alert">
-                                        Информация о вакансии обновлена
+                                        Resume has been successfully created
+                                    </p>
+                                {% endif %}
+                                {% if message.message == 'OK' %}
+                                    <p class="alert alert-info mb-4" role="alert">
+                                        Resume has been deleted
                                     </p>
                                 {% endif %}
                             {% endfor %}
-                            <!-- vacancy state 1 -->
-                            {% for vacancy in page_obj %}
+                            <!-- resume state 1 -->
+                            {% for resume in page_obj %}
                                 <div class="card mt-3">
                                     <div class="card-body px-4">
                                         <div class="row align-items-center">
                                             <div class="col-6 col-lg-8">
-                                                <a href="{{ vacancy.get_absolute_url }}" class="mb-1">{{ vacancy.title }}</a>
-                                                <p class="mb-1 mt-3">
-                                                    <span class="mr-4">{{ vacancy.salary_min }}-{{ vacancy.salary_max }}</span><a href="#" class="text-info">{{ vacancy.applications.count}}</a>
+                                                <a href="{{ resume.get_absolute_url }}" class="mb-1">
+                                                    {{ resume.title }}
+                                                </a>
+                                                <p class="mb-1">
+                                                    <span class="mr-4">{{ vacancy.salary_max }}</span><a href="#" class="text-info">{{ vacancy.applications.count}}</a>
                                                 </p>
                                             </div>
                                             <div class="col-6 col-lg-4 text-right">
-                                                <a href="/cabinet/vacancy/{{ vacancy.slug }}/edit/" class="btn btn-outline-info">Изменить</a>
+                                                <a href="{% url 'edit_resume' pk=resume.pk %}" class="btn btn-outline-info">Change</a>
+                                                <a href="{% url 'delete_resume' pk=resume.pk %}" style="color:#000;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash ml-1" viewBox="0 0 16 16">
+                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                    </svg>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             {% endfor %}
-                            <!-- END vacancy state 1 -->
+                            <!-- END resume state 1 -->
                         </section>
 
                         <!-- Pagination -->
@@ -77,8 +84,8 @@
                                 </nav>
                             {% endif  %}
                         </div>
-                    <div class="form-group mt-2">
-                            <a href="{% url 'create_vacancy' %}"><button class="btn btn-info" type="submit">Add vacancy</button></a>
+                        <div class="form-group mt-2">
+                            <a href="{% url 'create_resume' %}"><button class="btn btn-info" type="submit">Add resume</button></a>
                         </div>
                     </div>
                 </div>

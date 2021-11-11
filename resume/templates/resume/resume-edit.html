@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+    <main class="container mt-3 pb-5">
+        <section class="col-12 col-lg-6 offset-lg-3 mt-5 card">
+            <div class="card-body px-3 pb-4">
+                <h1 class="h4 pt-2 pb-3">Мое резюме</h1>
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        <p class="alert alert-info mb-4" role="alert">
+                            Information updated
+                        </p>
+                    {% endif %}
+                    {% if message.tags == 'error' %}
+                        <p class="alert alert-danger mb-4" role="alert">
+                            Error
+                        </p>
+                    {% endif %}
+                {% endfor %}
+                <form  class="" method="post">
+                    {% csrf_token %}
+                    <div class="pb-4">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group pb-2">
+                                {{ form.first_name.label_tag }}
+                                {{ form.first_name }}
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-group pb-2">
+                                {{ form.second_name.label_tag }}
+                                {{ form.second_name }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group pb-2">
+                                {{ form.status.label_tag }}
+                                {{ form.status }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group pb-2">
+                                {{ form.salary.label_tag }}
+                                {{ form.salary }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group pb-2">
+                                {{ form.specialty.label_tag }}
+                                {{ form.specialty }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group pb-2">
+                                {{ form.grade.label_tag }}
+                                {{ form.grade }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group pb-2">
+                        {{ form.education.label_tag }}
+                        {{ form.education }}
+                    </div>
+                    <div class="form-group pb-2">
+                        {{ form.experience.label_tag }}
+                        {{ form.experience }}
+                    </div>
+                    <div class="form-group pb-3">
+                        {{ form.portfolio.label_tag }}
+                        {{ form.portfolio }}
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-info" value="Сохранить">
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

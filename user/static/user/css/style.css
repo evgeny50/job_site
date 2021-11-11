@@ -10,6 +10,7 @@
     border-color: #1e88e5;
     border-radius: 45px;
     color: white;
+    margin-top: 7%;
 }
 
 .btn-primary:hover {
@@ -24,4 +25,3 @@
     color: #2998ff;
     margin: 0 10px 0 10px;
 }
-
