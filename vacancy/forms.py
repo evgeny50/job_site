@@ -1,5 +1,7 @@
 from django import forms
+from django.contrib.auth.models import User
 
+from resume.models import Resume
 from .models import Application, Vacancy
 
 
@@ -35,16 +37,21 @@ class SendCoverLetterForm(forms.ModelForm):
 
     class Meta:
         model = Application
-        fields = ('written_username', 'written_phone', 'written_cover_letter')
+        fields = ('written_cover_letter',)
         widgets = {
-            'written_username': forms.TextInput(
-                attrs={'class': 'form-control'}),
-            'written_phone': forms.NumberInput(
-                attrs={'class': 'form-control', 'type': 'tel'}),
             'written_cover_letter': forms.Textarea(
                 attrs={'class': 'form-control'}
             )
         }
+
+    def __init__(self, pk, *args, **kwargs):
+        super(SendCoverLetterForm, self).__init__(*args, **kwargs)
+        self.fields['resume'] = forms.ModelChoiceField(
+            queryset=Resume.objects.filter(user_id=pk),
+            widget=forms.Select(
+                attrs={'class': 'form-control'}
+            ))
+
 
 
 class SearchForm(forms.Form):

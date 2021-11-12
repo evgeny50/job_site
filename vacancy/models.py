@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 
 from company.models import Company
+from resume.models import Resume
 
 
 class Vacancy(models.Model):
@@ -124,12 +125,10 @@ class Skill(models.Model):
 
 
 class Application(models.Model):
-    written_username = models.CharField(
-        max_length=255,
-        verbose_name='Имя'
-    )
-    written_phone = models.IntegerField(
-        verbose_name='Телефон'
+    resume = models.ForeignKey(
+        Resume,
+        on_delete=models.CASCADE,
+        related_name='app'
     )
     written_cover_letter = models.TextField(
         verbose_name='Сопроводительное письмо'
@@ -138,11 +137,13 @@ class Application(models.Model):
         Vacancy,
         on_delete=models.CASCADE,
         related_name='applications',
-        verbose_name='Отклик на вакансию'
+        verbose_name='Отклик на вакансию',
+        null=True
     )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='applications',
-        verbose_name='Пользователь'
+        verbose_name='Пользователь',
+        null=True
     )

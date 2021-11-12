@@ -24,7 +24,10 @@
                     <form method="post" class="card mt-4 mb-3">
                         {% csrf_token %}
                         <div class="card-body mx-3">
-                            {{ form.as_p }}
+                            <p>{{ form.resume.label_tag }}</p>
+                            <p>{{ form.resume }}</p>
+                            <p>{{ form.written_cover_letter.label_tag }}</p>
+                            <p>{{ form.written_cover_letter }}</p>
                             <button class="btn btn-primary mt-2 mb-2" type="submit">Send</button>
                         </div>
                     </form>

@@ -7,7 +7,8 @@ class Resume(models.Model):
     """Fields for creating a resume"""
     user = models.ForeignKey(
         User,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='resume'
     )
     title = models.CharField(
         max_length=255,
@@ -58,7 +59,7 @@ class Resume(models.Model):
     )
 
     def __str__(self):
-        return self.first_name
+        return self.title
 
     def get_absolute_url(self):
         return reverse('list_resume', kwargs={'pk': self.pk})

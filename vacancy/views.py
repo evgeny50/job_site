@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib.auth.models import User
 from django.views.generic import ListView
 
 from .serializers import VacancySerializer
@@ -124,7 +125,7 @@ class ViewVacancy(View):
 
     def get(self, request, slug):
         vacancy = get_vacancy(slug)
-        form = self.form_class
+        form = self.form_class(request.user.pk)
         return render(request, 'vacancy/vacancy.html', {
             'vacancy': vacancy,
             'form': form
@@ -133,9 +134,10 @@ class ViewVacancy(View):
     def post(self, request, slug):
         if not request.user.is_authenticated:
             return redirect('login')
-        form = self.form_class(request.POST)
+        form = self.form_class(request.user.pk, request.POST)
         if form.is_valid():
             form.instance.user = request.user
+            form.instance.resume = form.cleaned_data['resume']
             form.instance.vacancy = Vacancy.objects.get(slug=slug)
             form.save()
             return render(request, 'vacancy/send.html')

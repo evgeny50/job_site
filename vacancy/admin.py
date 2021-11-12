@@ -23,8 +23,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = (
-        'written_username', 'written_phone',
-        'written_cover_letter'
+       'written_cover_letter',
     )
 
 
