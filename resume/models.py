@@ -1,12 +1,14 @@
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+
+from user.models import CustomUser
 
 
 class Resume(models.Model):
     """Fields for creating a resume"""
     user = models.ForeignKey(
-        User,
+        CustomUser,
         on_delete=models.CASCADE,
         related_name='resume'
     )

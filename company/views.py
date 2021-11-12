@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
@@ -7,8 +7,12 @@ from company.forms import FormCreateCompany
 from vacancy.servises.servises import get_my_company
 
 
-class CreateMyCompany(LoginRequiredMixin, View):
+class CreateMyCompany(LoginRequiredMixin, PermissionRequiredMixin, View):
     """Creating a company from form."""
+    permission_required = (
+        'company.add_company', 'company.change_company',
+        'delete_company', 'company.view_company'
+    )
     form_class = FormCreateCompany
     template_name = 'cabinet/company-edit.html'
 

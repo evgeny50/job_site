@@ -1,12 +1,12 @@
 import unidecode
 
-from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
 from company.models import Company
 from resume.models import Resume
+from user.models import CustomUser
 
 
 class Vacancy(models.Model):
@@ -141,7 +141,7 @@ class Application(models.Model):
         null=True
     )
     user = models.ForeignKey(
-        User,
+        CustomUser,
         on_delete=models.CASCADE,
         related_name='applications',
         verbose_name='Пользователь',

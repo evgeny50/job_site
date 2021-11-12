@@ -70,18 +70,18 @@
                                 </div>
                             </form>
                             <!-- Applications -->
-              <h2 class="h4 pt-2 pb-3">Отклики - {{ applications.count }}</h2>
+                            <h2 class="h4 pt-2 pb-3">Отклики - {{ applications.count }}</h2>
                             {% for application in applications %}
-              <!-- Application 1 -->
-              <div class="card mt-3">
-                <div class="card-body px-4">
-                  <p class="mb-1 font-weight-bold"><a href="{% url 'list_resume' application.resume.pk %}">{{ application.resume.title }}</a></p>
-                  <p class="mb-2"><a href="tel:+79002842324" class="text-dark">{{ application.resume.first_name }} {{ application.resume.second_name }}</a></p>
-                  <p class="mb-1">{{ application.written_cover_letter }}</p>
-                </div>
-              </div>
+                                <!-- Application 1 -->
+                                <div class="card mt-3">
+                                    <div class="card-body px-4">
+                                        <p class="mb-1 font-weight-bold"><a href="{% url 'list_resume' application.resume.pk %}">{{ application.resume.title }}</a></p>
+                                        <p class="mb-2"><a href="tel:+79002842324" class="text-dark">{{ application.resume.first_name }} {{ application.resume.second_name }}</a></p>
+                                        <p class="mb-1">{{ application.written_cover_letter }}</p>
+                                    </div>
+                                </div>
                             {% endfor %}
-              <!-- END Application 1 -->
+                            <!-- END Application 1 -->
                         </section>
                         <!-- END Tab -->
                     </div>

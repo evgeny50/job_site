@@ -9,7 +9,7 @@ from vacancy.servises.servises import get_my_company
 
 
 def get_user(request):
-    if request.user.is_superuser:
+    if request.user.is_employer:
         return my_company(request)
     return get_resume_in_cabinet(request)
 

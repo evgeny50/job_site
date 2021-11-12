@@ -1,9 +1,11 @@
 import unidecode
 
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+
+from user.models import CustomUser
 
 
 class Company(models.Model):
@@ -35,7 +37,7 @@ class Company(models.Model):
         verbose_name='Количество сотрудников'
     )
     owner = models.OneToOneField(
-        User,
+        CustomUser,
         on_delete=models.CASCADE,
         blank=True,
         null=True

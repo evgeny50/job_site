@@ -30,7 +30,7 @@
                     <div class="dropdown-menu dropdown-menu-right mt-3">
                         <a href="#" class="dropdown-item py-2">Profile</a>
                         <a href="#" class="dropdown-item py-2">Summary</a>
-                        {% if request.user.is_staff %}
+                        {% if request.user.is_employer %}
                             <a href="{% url 'my_profile' %}" class="dropdown-item py-2">My company</a>
                         {% else %}
                             <a href="{% url 'users_resume' %}" class="dropdown-item py-2">My resume</a>
