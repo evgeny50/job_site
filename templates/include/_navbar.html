@@ -7,17 +7,20 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
             <ul class="navbar-nav col-10">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'all_vacancies' %}">Vacancies</a>
+                    <strong><a class="nav-link" href="{% url 'all_vacancies' %}">Vacancies</a></strong>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'all_resume' %}">Resumes</a>
+                    <strong><a class="nav-link" href="{% url 'all_resume' %}">Resumes</a></strong>
+                </li>
+                <li class="nav-item">
+                    <strong><a class="nav-link" href="{% url 'login_employer' %}">Employer</a></strong>
                 </li>
             </ul>
             {% if user.is_authenticated %}
                 <ul class="navbar-nav col-2 justify-content-end">
                 <ul class="navbar-nav col-10">
                     <li class="nav-item">
-                        <a class="nav-link"><strong>Hi {{ user.username }}!</strong></a>
+                        <a class="nav-link"><strong>Hi {{ user.first_name }}!</strong></a>
                     </li>
                 </ul>
                 <li class="nav-item active">
@@ -28,7 +31,7 @@
                         </svg>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right mt-3">
-                        <a href="#" class="dropdown-item py-2">Profile</a>
+                        <a href="{% url 'edit_profile' %}" class="dropdown-item py-2">Profile</a>
                         <a href="#" class="dropdown-item py-2">Summary</a>
                         {% if request.user.is_employer %}
                             <a href="{% url 'my_profile' %}" class="dropdown-item py-2">My company</a>
@@ -40,7 +43,7 @@
                     </div>
                 </div>
             {% else %}
-                <a href="{% url 'login' %}" class="nav-link font-weight-bold">Вход</a>
+                <a href="{% url 'login' %}" class="nav-link font-weight-bold">Login</a>
             {% endif %}
             </li>
             </ul>

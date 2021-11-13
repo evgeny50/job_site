@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-# from django.contrib.auth.models import User
+
+from phonenumber_field.formfields import PhoneNumberField
 
 from user.models import CustomUser
 
@@ -40,14 +41,11 @@ class FormRegisterEmployer(UserCreationForm):
             attrs={'class': 'form-control'}
         )
     )
-    phone_number = forms.CharField(
+    phone_number = PhoneNumberField(
         label='Phone',
         widget=forms.NumberInput(
-            attrs={'class': 'form-control',
-                   'placeholder': '+7 (999) 999-99-99'}
-        )
+            attrs={'class': 'form-control'})
     )
-
     password1 = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(
@@ -62,7 +60,10 @@ class FormRegisterEmployer(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'phone_number', 'password1', 'password2']
+        fields = [
+            'first_name', 'last_name', 'phone_number',
+            'password1', 'password2'
+        ]
 
 
 class FormLoginUser(AuthenticationForm):
@@ -76,3 +77,32 @@ class FormLoginUser(AuthenticationForm):
         widget=forms.PasswordInput
         (attrs={'class': 'form-control'})
     )
+
+
+class FormEditProfile(forms.ModelForm):
+    first_name = forms.CharField(
+        max_length=255,
+        label='First name',
+        widget=forms.TextInput
+        (attrs={'class': 'form-control'})
+    )
+    last_name = forms.CharField(
+        max_length=255,
+        label='Last name',
+        widget=forms.TextInput
+        (attrs={'class': 'form-control'})
+    )
+    email = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput
+        (attrs={'class': 'form-control'})
+    )
+    phone_number = PhoneNumberField(
+        label='Phone',
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'phone_number']

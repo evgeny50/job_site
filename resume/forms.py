@@ -11,13 +11,15 @@ class CreateResume(forms.ModelForm):
                   'specialty', 'grade', 'education', 'experience', 'portfolio')
         widgets = {
             'first_name': forms.TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'readonly': True
             }),
             'title': forms.TextInput(attrs={
                 'class': 'form-control'
             }),
             'second_name': forms.TextInput(attrs={
-                'class': 'mb-2 text-dark form-control'
+                'class': 'mb-2 text-dark form-control',
+                'readonly': True
             }),
             'status': forms.Select(attrs={
                 'class': 'mb-2 text-dark custom-select mr-sm-2'

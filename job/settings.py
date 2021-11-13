@@ -22,8 +22,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',
     'debug_toolbar',
+    'phonenumber_field',
+    'rest_framework',
 
     'company.apps.CompanyConfig',
     'vacancy.apps.VacancyConfig',

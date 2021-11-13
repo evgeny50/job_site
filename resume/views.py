@@ -8,6 +8,7 @@ from django.views.generic import DetailView, ListView, View, DeleteView
 from .forms import CreateResume
 from .models import Resume
 from .services.services import get_resume, get_resume_on_pk
+from user.services.services import get_user
 
 
 class AllResume(ListView):
@@ -71,12 +72,17 @@ class EditResume(View):
 
 
 def create_resume(request):
+    user = get_user(request)
     if request.method == 'POST':
-        form = CreateResume(data=request.POST)
+
+        form = CreateResume(data=request.POST, initial={'first_name': 'geg'})
         if form.is_valid():
             form.instance.user = request.user
             form.save()
             messages.success(request, 'create_success')
             return redirect('users_resume')
-    form = CreateResume()
+    form = CreateResume(initial={
+        'first_name': user.first_name,
+        'second_name': user.last_name
+    })
     return render(request, 'resume/resume-edit.html', {'form': form})
