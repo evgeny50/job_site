@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+<title>{% block title %}My profile{% endblock %}</title>
+
+{% block main %}
+
+    <body>
+    <main class="container mt-3 pb-5">
+        <div class="row mt-5">
+            <div class="col-12 col-lg-2">
+            </div>
+            <div class="col-12 col-lg-8">
+                <div class="card">
+                    <div class="card-body px-4 pb-4">
+                        <!-- Tab -->
+                        <section class="tab-pane fade show active">
+                            <h2 class="h4 pt-2 pb-3">Information about the profile</h2>
+                            {% for message in messages %}
+                                {% if message.tags == 'success' %}
+                                    <p class="alert alert-info" role="alert">
+                                        Profile information updated
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
+
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group pb-1">
+                                            {{ form.first_name.label_tag }}
+                                            {{ form.first_name }}
+                                            {{ form.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            {{ form.last_name.label_tag }}
+                                            {{ form.last_name }}
+                                            {{ form.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group pb-2">
+                                            {{ form.email.label_tag }}
+                                            {{ form.email }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group pb-2">
+                                            {{ form.phone_number.label_tag }}
+                                            {{ form.phone_number }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-info" type="submit">Save</button>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- END Tab -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </body>
+
+{% endblock %}
